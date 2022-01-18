@@ -1,0 +1,49 @@
+{%extends "template.html"%} {%block title%}Quiz {{code}}{%endblock%} {%block
+content%}
+<!-- 
+REQUIRES
+* name
+* code
+-->
+<center>
+  <h4>Your name is</h4>
+  <img src="{{url_for('static',filename='assets/Loading.svg')}}" style="width:2rem;height:2rem" />
+</center>
+
+<script>
+  window.join = "{{code}}";
+  window.memberName = "{{name}}";
+  document.querySelector("center>h4").innerHTML =
+    "Your name is \"" + window.memberName + "\"";
+</script>
+{%block header%}
+<style>
+  #option {
+    opacity: 1;
+    box-shadow: 2vh 2vh 2vh var(--disabled-color);
+    border:2px solid black;
+  }
+
+  fieldset #q-title,
+  fieldset #option,
+  fieldset #option h2,
+  fieldset {
+    background-color: var(--input-color);
+    color: var(--input-foreground)
+  }
+
+  #option>input {
+    width: 10%;
+  }
+  #option.greenOption,
+  #option.greenOption h2{
+    background-color: var(--success);
+  }
+
+  #option.redOption,
+  #option.redOption h2{
+    background-color: var(--error);
+  }
+</style>
+<script src="{{url_for('static', filename='js/joinQuiz.js')}}" defer></script>
+{%endblock%} {%endblock%}

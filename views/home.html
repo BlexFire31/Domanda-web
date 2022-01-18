@@ -1,0 +1,52 @@
+{%extends "template.html"%} {%block title%}Domanda{%endblock%} {%block content%}
+<script></script>
+<style></style>
+<center>
+  <img src="{{url_for('static',filename='assets/Icon.svg')}}" id="home-icon" />
+
+
+
+  <h2>Domanda</h2>
+
+  <form action="{{url_for('Main.RouteQuiz.joinQuiz.JoinQuizPage')}}" method="POST">
+    <input type="text" class="input" name="code" value="{%if code!=None%}{{code}}{%endif%}" placeholder="Quiz Code" />
+    <input type="text" class="input" name="Name"
+      value="{%if session.get('Name')!=None%}{{session.get('Name')}}{%endif%}" placeholder="Nickname" />
+    <p class="error">{{get_flashed_messages()[0]}}</p>
+    <button type="submit">Ok</button>
+  </form>
+
+  <form action="{{url_for('Main.RouteQuiz.createQuiz.CreateQuizPage')}}" method="GET">
+    <button type="submit">Create a quiz</button>
+  </form>
+
+  <form action="{{url_for('Main.RouteQuiz.hostQuiz.HostQuizPage')}}" method="GET">
+    <button type="submit">Host your quiz</button>
+  </form>
+</center>
+
+<form action="{{url_for('Main.RouteAuth.logIn.LoginPage')}}" method="POST" class="loginForm">
+  <input type="text" value="" name="account-email" style="display: none" />
+  <input type="text" value="" name="account-name" style="display: none" />
+  <input type="text" value="" name="account-photo" style="display: none" />
+  <input type="text" value="" name="account-uid" style="display: none" />
+</form>
+
+{%endblock%}
+
+
+{%block header%}
+<style>
+  #home-icon {
+    position: relative;
+    transition: 400ms;
+    animation: bounce 1800ms forwards 7 ease-in-out;
+
+  }
+
+  .input {
+    margin-top: 7%;
+    margin-bottom: 0.7%;
+  }
+</style>
+{%endblock%}

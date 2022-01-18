@@ -1,0 +1,64 @@
+:root {
+  --primary-color: black;
+  --accent-color: black;
+  --secondary-color: black;
+  --secondary-accent-color: black;
+  --text-color: black;
+  --input-color: black;
+  --input-foreground: black;
+  --disabled-color: black;
+  --success: black;
+  --error: black;
+}
+:root {
+  --dark-success: #206d14;
+  --dark-error: #861313;
+  --dark-primary-color: #0f0f0f;
+  --dark-accent-color: #9900ff;
+  --dark-secondary-color: #290035;
+  --dark-secondary-accent-color: #5d009b;
+  --dark-text-color: #ffffff;
+  --dark-input-color: #1d1d1d;
+  --dark-input-foreground: #ffffff;
+  --dark-disabled-color: #222222;
+}
+:root {
+  --light-success: #43df2c;
+  --light-error: #da2d2d;
+  --light-primary-color: #290035;
+  --light-accent-color: #9900ff;
+  --light-secondary-color: #286ebd;
+  --light-secondary-accent-color: #397fce;
+  --light-text-color: #ffffff;
+  --light-input-color: #ffffff;
+  --light-input-foreground: #000000;
+  --light-disabled-color: #a9a9a9;
+}
+
+@keyframes bounce {
+  5% {
+    bottom: 0vh;
+    transform: scaleY(80%);
+  }
+
+  15% {
+    bottom: 20vh;
+    transform: scaleY(110%);
+  }
+  25% {
+    bottom: 2vh;
+    transform: scaleY(90%);
+  }
+  35% {
+    bottom: 20vh;
+    transform: scaleY(110%);
+  }
+  50% {
+    bottom: 0vh;
+    transform: scaleY(100%);
+  }
+  100% {
+    bottom: 0vh;
+    transform: scaleY(100%);
+  }
+}

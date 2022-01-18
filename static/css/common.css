@@ -1,0 +1,126 @@
+h1,
+h2 {
+  font-family: SItalic;
+}
+
+[disabled] {
+  background-color: var(--disabled-color);
+}
+[type="submit"] {
+  display: block;
+  margin-top: 0.6%;
+}
+.error {
+  color: red;
+  font-family: SItalic;
+}
+body {
+  background-color: var(--primary-color);
+}
+* {
+  color: var(--text-color);
+  font-family: SLight;
+  transition: 500ms;
+}
+.hide {
+  display: none;
+}
+
+button:hover:not([disabled]),
+input[type="button"]:hover:not([disabled]),
+input[type="submit"]:hover:not([disabled]) {
+  cursor: pointer;
+  transform: scale(120%);
+  background-color: var(--secondary-accent-color);
+}
+input:focus {
+  transform: scale(103%);
+}
+#option > input {
+  margin-left: 0.25em;
+  font-size: 150%;
+}
+#option {
+  padding: 3%;
+  margin-left: 10%;
+  border-radius: 0.4em;
+}
+fieldset#question {
+  margin: 0% 15% 0% 15%;
+  border-radius: 1rem;
+}
+fieldset {
+  margin: 1rem;
+}
+#option > h2 {
+  display: inline;
+}
+
+#question input {
+  border-radius: 0.5em;
+  font-size: 120%;
+  padding: 0.8em;
+  color: var(--input-foreground);
+  background-color: var(--input-color);
+}
+#toggle-theme-btn > img,
+#info-btn > img {
+  margin: 1%;
+  width: 5vh;
+  height: 5vh;
+}
+
+#toggle-theme-btn {
+  float: right;
+}
+#info-btn {
+  float: left;
+}
+
+button {
+  color: var(--text-color);
+  border: none;
+  padding: 0.5em;
+  background-color: var(--secondary-color);
+  border-radius: 0.3em;
+  font-size: 100%;
+}
+#home-btn > img {
+  width: 5vh;
+  height: 5vh;
+  float: left;
+  margin: 1%;
+}
+input {
+  margin: 0.2%;
+  font-size: 1.2em;
+  padding: 0.75em;
+  border-radius: 2em;
+  background-color: var(--input-color);
+  color: var(--input-foreground);
+  width: 20%;
+}
+nav .account-circle {
+  border-radius: 50%;
+  width: 5vh;
+  height: 5vh;
+  float: right;
+  margin: 1%;
+  display: none;
+}
+
+fieldset #q-title {
+  width: 75%;
+}
+
+nav {
+  width: fill-available;
+  width: -moz-available;
+  width: -webkit-fill-available;
+  top: 0px;
+  margin: 0.5rem;
+}
+
+img.center-loading {
+  line-height: 100vh;
+}

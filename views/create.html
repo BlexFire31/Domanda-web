@@ -1,0 +1,52 @@
+{%extends "template.html"%}
+{%block title%}Create a quiz{%endblock%}
+{%block content%}
+<style>
+  select,
+  option {
+    padding: 1%;
+    font-size: 100%;
+    color: var(--input-foreground);
+    background-color: var(--input-color);
+  }
+
+  #option>input {
+    width: 50%;
+  }
+
+  center button {
+    margin: 1rem;
+    padding: 1rem;
+    font-size: large;
+  }
+</style>
+
+<ol id="questions"></ol>
+<center>
+  <button onclick="addAQuestion();" type="button">
+    Add a question
+  </button>
+  <button id="questions-not-0" onclick="createQuiz();" disabled>
+    Create
+  </button>
+  <button onclick="loadQuizFile()">
+    Import .dqcx file(s)
+  </button>
+  <button id="questions-not-0" onclick="saveQuizFile()">
+    Save .dqcx file
+  </button>
+</center>
+<script>
+  const disabledInterval = setInterval(function () {
+    try {
+      let form = document.getElementById("questions").children;
+      let elements = document.querySelectorAll("#questions-not-0");
+      elements.forEach(item => item.disabled = form.length == 0)
+      onbeforeunload = () => form.length == 0 ? null : ""; // To show warning before leaving page if questions are 0
+    } catch { }
+  }, 100);
+</script>
+{%endblock%}
+{%block header%}
+<script src="{{url_for('static', filename='js/createQuiz.js')}}" defer></script>
+{%endblock%}

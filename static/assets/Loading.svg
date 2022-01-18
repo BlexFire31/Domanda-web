@@ -1,0 +1,23 @@
+<svg width="110" height="112" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  overflow="hidden" style="animation: 1800ms spin forwards ease infinite;">
+  <style type="text/css">
+    @keyframes spin {
+      from {
+        transform: rotateZ(0deg);
+      }
+
+      to {
+        transform: rotateZ(calc(360deg*4));
+      }
+    }
+  </style>
+
+  <g clip-path="url(#clip0)" transform="translate(-606 -272)">
+    <path
+      d="M613.5 327.5C613.5 300.99 634.99 279.5 661.5 279.5 688.01 279.5 709.5 300.99 709.5 327.5 709.5 354.01 688.01 375.5 661.5 375.5 634.99 375.5 613.5 354.01 613.5 327.5Z"
+      stroke="#ffffffcc" stroke-width="13.3333" stroke-miterlimit="8" fill="none" fill-rule="evenodd" />
+    <path d="M661.5 279.5C688.01 279.5 709.5 300.99 709.5 327.5 709.5 337.397 706.441 347.051 700.742 355.142"
+      stroke="#9900FF" stroke-width="13.3333" stroke-linecap="round" stroke-miterlimit="8" fill="none"
+      fill-rule="evenodd" />
+  </g>
+</svg>

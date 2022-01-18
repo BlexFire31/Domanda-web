@@ -1,0 +1,97 @@
+{%extends "template.html"%}
+{%block title%}Edit Quiz {%if code!=None%}{{code}}{%endif%}{%endblock%}
+{%block content%}
+{%if code==None%}
+<form action="{{url_for('Main.RouteQuiz.editQuiz.EditQuizPage')}}" method="GET">
+    <center style="font-size: 140%">
+        <br /><br /><br />
+        <h2>Edit a quiz</h2>
+        <input type="text" class="input" style="font-size: 90%" placeholder="12345678" name="code" />
+        <p class="error">{{get_flashed_messages()[0]}}</p>
+        <button type="submit">Ok</button>
+    </center>
+</form>
+{%else%}
+<ol id="questions">
+    {%for question in quizData.values()%}
+    <fieldset id="question">
+        <legend>Question</legend>
+        <center><input type="text" id="q-title" placeholder="Question Title" required="" size="50" maxlength="250"
+                value="{{question.get('title')}}">
+        </center>
+        {%for option in question.keys()%}
+        {%if option not in ["correctOption","title"]%}
+        <div id="option" optionid="{{option.split('option')[1]}}">
+            <h2>{{option.split('option')[1]}}</h2> <input type="text" {%if option in [ 'optionA' ,'optionB' ] %}
+                required {%endif%} maxlength="50"
+                value="{%if question.get(option)!=None%}{{question.get(option)}}{%endif%}">
+        </div>
+        {%endif%}
+        {%endfor%}
+        <center style="margin: 1%; font-size: 100%;">Correct answer:&nbsp;
+            <select name="correctAnswer">
+                {%for option in question.keys()%}
+                {%if option not in ["correctOption","title"] %}
+                <option value="{{option}}" {%if option==question.get('correctOption') %} selected="" {%endif%}>
+                    {{option.split('option')[1]}}</option>
+                {%endif%}
+                {%endfor%}
+            </select>
+        </center>
+        <button type="button" onclick="deleteAQuestion(this);">Delete</button>
+    </fieldset>
+    {%endfor%}
+</ol>
+<center>
+    <button onclick="addAQuestion();" type="button">
+        Add a question
+    </button>
+    <button id="questions-not-0" onclick="createQuiz();" disabled>
+        Update
+    </button>
+    <button onclick="loadQuizFile()">
+        Import .dqcx file(s)
+    </button>
+    <button id="questions-not-0" onclick="saveQuizFile()">
+        Save .dqcx file
+    </button>
+</center>
+<script>
+    const disabledInterval = setInterval(function () {
+        try {
+            let form = document.getElementById("questions").children;
+            let elements = document.querySelectorAll("#questions-not-0");
+            elements.forEach(item => item.disabled = form.length == 0)
+            onbeforeunload = () => form.length == 0 ? null : ""; // To show warning before leaving page if questions are 0
+        } catch { }
+    }, 100);
+</script>
+
+{%block header%}
+<script src="{{url_for('static', filename='js/createQuiz.js')}}" defer></script>
+<script>
+    window.code = "{{code}}";
+    window.editMode = true;
+
+</script>
+<style>
+    select,
+    option {
+        padding: 1%;
+        font-size: 100%;
+        color: var(--input-foreground);
+        background-color: var(--input-color);
+    }
+
+    #option>input {
+        width: 50%;
+    }
+
+    center button {
+        margin: 1rem;
+        padding: 1rem;
+        font-size: large;
+    }
+</style>
+
+{%endblock%} {%endif%} {%endblock%}

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <script>
+        const firebaseConfig = {{ config.WEB_CONFIG| safe}};
+
+        // Theme related
+
+        function updateTheme() {
+            const theme = localStorage.getItem("color");
+            if (theme == null) {
+
+                localStorage.setItem("color", window.matchMedia('(prefers-color-scheme: dark)').matches ? "dark" : "light")
+                return updateTheme();
+            }
+            const properties = [
+                "primary-color",
+                "accent-color",
+                "secondary-color",
+                "secondary-accent-color",
+                "text-color",
+                "input-color",
+                "input-foreground",
+                "disabled-color",
+                "success",
+                "error",
+            ];
+            properties.forEach((property) => {
+                document.documentElement.style.setProperty(
+                    `--${property}`,
+                    `var(--${theme}-${property})`
+                );
+            });
+        }
+
+        function toggleTheme() {
+            if (localStorage.getItem("color") == "dark") {
+                localStorage.setItem("color", "light");
+            } else {
+                localStorage.setItem("color", "dark");
+            }
+            updateTheme();
+        }
+    </script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-analytics.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-auth.js"></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta property="og:image:url" content="{{url_for('static',filename='assets/Icon.svg')}}">
+    <meta property="og:image:width" content="650" />
+
+    <meta property="og:image:height" content="650" />
+    <meta property=" og:description"
+        content=" Domanda is a web-app that allows you to create quizzes and allow others to join and attend it." />
+    <meta property="og:title" content="Domanda" />
+    <meta property="og:url" content="domanda-quiz.web.app" />
+
+
+    <title>{% block title%}{%endblock%}</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/common.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static',filename='css/variables.css')}}" />
+    <link rel="shortcut icon" href="{{url_for('static',filename='assets/Icon.svg')}}" />
+    <script src="{{url_for('static',filename='js/script.js')}}"></script>
+    <script src="{{url_for('static',filename='js/authHandler.js')}}"></script>
+    {%block header%}{%endblock%}
+    <style>
+        @font-face {
+            font-family: SLight;
+            src: url("{{url_for('static',filename='assets/Light.ttf')}}");
+        }
+
+        @font-face {
+            font-family: SItalic;
+            src: url("{{url_for('static',filename='assets/Italic.ttf')}}");
+        }
+
+        @font-face {
+            font-family: SRegular;
+            src: url("{{url_for('static',filename='assets/Regular.ttf')}}");
+        }
+    </style>
+
+    <nav>
+        {%if session.get('Uid') != None%}
+        <a href="javascript:logOut();"><img src="{{session.get('Photourl')}}" alt="account-photo" class="account-circle"
+                title="Sign Out" /></a>
+        {%else%}
+        <a href="{{url_for('Main.RouteAuth.logIn.LoginPage')}}"><img
+                src="{{url_for('static',filename='assets/account-photo.jpg')}}" alt="account-photo"
+                class="account-circle" title="Sign In" /></a>
+        {%endif%}
+
+        <button id="toggle-theme-btn" title="Toggle theme" onclick="toggleTheme()">
+            <img src="{{url_for('static', filename='assets/Theme.svg')}}">
+        </button>
+
+        <!-- <button id="info-btn" title="Toggle theme" onclick="toggleTheme()">
+            <img src="{{url_for('static', filename='assets/Theme.svg')}}">
+        </button> -->
+
+        <a href="{{url_for('Main.home.HomePage')}}" id="home-btn">
+            <img src="{{url_for('static',filename='assets/Icon.svg')}}" alt="Go to home">
+        </a>
+
+        <!-- <button href="{{url_for('Main.home.HomePage')}}" id="info-btn">
+            <img src="{{url_for('static', filename='assets/Theme.svg')}}">
+        </button>
+        TODO add info button -->
+
+
+    </nav>
+
+</head>
+
+<body onload="updateTheme()">
+    {%block content%}{%endblock%}
+    <script>
+        const URI_KEYS = {
+            HOME: "{{url_for('Main.home.HomePage')}}",
+            AUTH: {
+                LOGIN: "{{url_for('Main.RouteAuth.logIn.LoginPage')}}",
+                LOGOUT: "{{url_for('Main.RouteAuth.logOut.LogoutPage')}}",
+            },
+            QUIZ: {
+                CREATE: "{{url_for('Main.RouteQuiz.createQuiz.CreateQuizPage')}}",
+                HOST: "{{url_for('Main.RouteQuiz.hostQuiz.HostQuizPage')}}",
+                JOIN: "{{url_for('Main.RouteQuiz.joinQuiz.JoinQuizPage')}}",
+                EDIT: "{{url_for('Main.RouteQuiz.editQuiz.EditQuizPage')}}"
+
+            },
+            API: {
+                JOIN: {
+                    GET: "{{url_for('Main.RouteApi.ApiJoin.getAnswer.getCorrectAnswer')}}",
+                    JOIN: "{{url_for('Main.RouteApi.ApiJoin.addMember.addMember')}}",
+                    SET: "{{url_for('Main.RouteApi.ApiJoin.setAnswer.setAnswer')}}"
+                },
+                MAKE: {
+                    CREATE: "{{url_for('Main.RouteApi.ApiMake.createQuiz.create')}}",
+                    EDIT: "{{url_for('Main.RouteApi.ApiMake.editQuiz.edit')}}",
+                },
+                HOST: {
+                    ALL: "{{url_for('Main.RouteApi.ApiHost.hostAll.hostAll')}}",
+                    SINGLE: "{{url_for('Main.RouteApi.ApiHost.hostSingle.hostSingle')}}",
+                    GET_STATUS: "{{url_for('Main.RouteApi.ApiHost.getStatus.getStatus')}}",
+                }
+            },
+            LOADING: "{{url_for('static',filename='assets/Loading.svg')}}"
+        }
+
+        if (window.location.pathname == "/") {
+            document.querySelector("nav .account-circle").style.display = "inline";
+            document.querySelector("nav #toggle-theme-btn").style.float = "left";
+            document.querySelector("nav #home-btn").style.display = "none";
+            document.querySelector("nav #info-btn").style.display = "block";
+        }
+
+
+    </script>
+</body>
+
+</html>

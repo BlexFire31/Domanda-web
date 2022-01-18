@@ -1,0 +1,69 @@
+{%extends "template.html"%}
+{%block title%}Host Quiz {%if code!=None%}{{code}}{%endif%}{%endblock%}
+{%block content%}
+{%if code==None%}
+<form action="{{url_for('Main.RouteQuiz.hostQuiz.HostQuizPage')}}" method="GET">
+  <center style="font-size: 140%">
+    <br /><br /><br />
+    <h2>Host a quiz</h2>
+    <input type="text" class="input" style="font-size: 90%" placeholder="12345678" name="code" />
+    <p class="error">{{get_flashed_messages()[0]}}</p>
+    <button type="submit">Host!</button>
+  </center>
+</form>
+{%else%}
+<script>
+  window.code = "{{code}}";
+  window.start = function (type) { }
+  window.finish = function (type) { }
+</script>
+<!-- TODO add widgets for hosting quiz -->
+<center id="host-actions">
+  <img src="{{url_for('static',filename='assets/Loading.svg')}}" class="center-loading" />
+</center>
+{%block header%}
+<script src="{{url_for('static', filename='js/hostQuiz.js')}}" defer></script>
+<style>
+  center.members {
+    margin: 5vh;
+  }
+
+  center.members>span {
+    display: inline-block;
+    border-radius: 0.5rem;
+    padding: 4vh;
+    margin: 3vh;
+    color: white;
+    background-color: rgba(19, 19, 19, 0.24);
+  }
+
+  center.answers>table {
+    background-color: rgba(170, 170, 170, 0.2);
+    border-radius: 0.5em;
+    margin: 3em;
+    border: 0.25em #eee solid;
+    width: 70vw;
+  }
+
+  center.answers>table * {
+    text-align: center;
+  }
+
+  .answers>table>thead th,
+  .answers>table center {
+    font-size: 1.5rem;
+    font-family: SRegular;
+  }
+
+  center button {
+    margin: 1rem;
+    padding: 1rem;
+    font-size: large;
+  }
+  
+  center.answers{
+    width:100%;
+    overflow-y:auto;
+  }
+</style>
+{%endblock%} {%endif%} {%endblock%}
