@@ -36,3 +36,5 @@ def on_request(response):
             f"[{datetime.datetime.now()}] {request.method} {request.path} [{response.status}]")
 
     return response
+
+app.run()
