@@ -5,9 +5,8 @@ import datetime
 from secrets import token_hex
 from waitress import serve
 from flask_compress import Compress
-import jinja2
-from dotenv import dotenv_values as environmentVariables
-import flask
+import os
+
 
 # TODO FIX THE WAY CLIENTS GET ACCESS TO QUESTIONS
 app = Flask(
@@ -19,7 +18,7 @@ app.register_blueprint(
     routes
 )
 app.secret_key = token_hex()
-app.config["WEB_CONFIG"] = environmentVariables().get("WEB_CONFIG")
+app.config["WEB_CONFIG"] = os.environ["WEB_CONFIG"]
 
 logging.basicConfig(level=logging.INFO)
 logging.info(f"Domanda server started at {datetime.datetime.now()}")
