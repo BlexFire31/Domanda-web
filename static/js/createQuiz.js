@@ -31,7 +31,7 @@ async function createQuiz(btn) {
   );
   xhr.onload = function () {
     let res = JSON.parse(xhr.response);
-    if (!res.inProgress) alert(res.error);
+    if (!res.inProgress) return alert(res.error);
     firestore
       .collection(res.code.toString())
       .doc("Questions")
