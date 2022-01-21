@@ -1,8 +1,8 @@
-from utils.functions import deleteResponses, isInt
+from utils.functions import deleteResponses, isInt, verify_id_token
 from routes.api.make.makeQuiz import setQuizInFirebase
 from routes.api.make.validateQuizData import validateQuizData
 from utils.db import database
-from flask import Blueprint, session, request
+from flask import Blueprint, request
 from utils.functions import runAsyncTask
 
 
@@ -11,7 +11,8 @@ api = Blueprint("editQuiz", __name__)
 
 @api.route("/edit", methods=["POST"])
 def edit():
-    if session.get("Uid") == None:  # checks whether user is signed in
+    user = verify_id_token(request.form.get("token"))
+    if user == None:  # checks whether user is signed in
 
         return {
             "inProgress": False,
@@ -31,7 +32,7 @@ def edit():
             "inProgress": False,
             "error": "This quiz does not exist"
         }
-    elif quiz.get("Host") != session.get("Uid"):
+    elif quiz.get("Host") != user["uid"]:
         return {
             "inProgress": False,
             "error": "You are not the owner of this quiz"
@@ -56,7 +57,7 @@ def edit():
                          .collection(str(q)),
                          False  # do not delete parent document ("Answers")
                          )
-        if newQuizLength < quizLength:
+        if newQuizLength < quizLength:  # Delete extra questions
             for q in range(newQuizLength+1, quizLength+1):
                 runAsyncTask(database
                              .collection(request.form.get("code").strip())
@@ -77,7 +78,7 @@ def edit():
                              True  # delete parent document ("Answers")
                              )
 
-        runAsyncTask(setQuizInFirebase, data, session.get("Uid"), code, True)
+        runAsyncTask(setQuizInFirebase, data, user["uid"], code, True)
 
         return {
             "inProgress": True,

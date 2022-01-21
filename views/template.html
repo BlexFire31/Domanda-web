@@ -70,7 +70,6 @@
     <link rel="stylesheet" href="{{url_for('static',filename='css/common.css')}}" />
     <link rel="stylesheet" href="{{url_for('static',filename='css/variables.css')}}" />
     <link rel="shortcut icon" href="{{url_for('static',filename='assets/Icon.svg')}}" />
-    <script src="{{url_for('static',filename='js/script.js')}}"></script>
     <script src="{{url_for('static',filename='js/authHandler.js')}}"></script>
     {%block header%}{%endblock%}
     <style>
@@ -91,14 +90,8 @@
     </style>
 
     <nav>
-        {%if session.get('Uid') != None%}
-        <a href="javascript:logOut();"><img src="{{session.get('Photourl')}}" alt="account-photo" class="account-circle"
-                title="Sign Out" /></a>
-        {%else%}
-        <a href="{{url_for('Main.RouteAuth.logIn.LoginPage')}}"><img
-                src="{{url_for('static',filename='assets/account-photo.jpg')}}" alt="account-photo"
-                class="account-circle" title="Sign In" /></a>
-        {%endif%}
+
+
 
         <button id="toggle-theme-btn" title="Toggle theme" onclick="toggleTheme()">
             <img src="{{url_for('static', filename='assets/Theme.svg')}}">
@@ -155,14 +148,29 @@
                 }
             },
             LOADING: "{{url_for('static',filename='assets/Loading.svg')}}"
-        }
-
-        if (window.location.pathname == "/") {
-            document.querySelector("nav .account-circle").style.display = "inline";
-            document.querySelector("nav #toggle-theme-btn").style.float = "left";
-            document.querySelector("nav #home-btn").style.display = "none";
-            document.querySelector("nav #info-btn").style.display = "block";
-        }
+        };
+        (async function () {
+            await firebase.initializeApp(firebaseConfig);
+            await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+            firebase.analytics();
+            window.auth = firebase.auth();
+            window.firestore = firebase.firestore();
+            const navbar = document.querySelector('nav');
+            const authListener = auth.onAuthStateChanged(() => {
+                if (auth.currentUser == null) {
+                    navbar.innerHTML = `<a href='{{url_for('Main.RouteAuth.logIn.LoginPage')}}'><img src='{{url_for('static',filename='assets/account-photo.jpg')}}' alt='account-photo' class='account-circle' title='Sign In' /></a>` + navbar.innerHTML;
+                } else {
+                    navbar.innerHTML = `<a href='javascript:logOut()'><img src='${auth.currentUser.photoURL}' alt='account-photo' class='account-circle' title='Log out' /></a>` + navbar.innerHTML;
+                }
+                setTimeout(authListener, 100)// run the unsubscribe function out of this function so that it actually unsubscribes
+                if (window.location.pathname == "/") {
+                    document.querySelector("nav .account-circle").style.display = "inline";
+                    document.querySelector("nav #toggle-theme-btn").style.float = "left";
+                    document.querySelector("nav #home-btn").style.display = "none";
+                    document.querySelector("nav #info-btn").style.display = "block";
+                }
+            })
+        })();
 
 
     </script>

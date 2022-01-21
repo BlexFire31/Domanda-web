@@ -4,7 +4,7 @@ if (window.code != null) {
   window.responseListeners = [];
 
   var actions = document.getElementById("host-actions");
-  window.start = function (type) {
+  window.start = async function (type) {
     actions.innerHTML = `<img src="${URI_KEYS.LOADING}" class="center-loading"/>`;
     let xhr = new XMLHttpRequest();
 
@@ -21,7 +21,11 @@ if (window.code != null) {
         "content-type",
         "application/x-www-form-urlencoded;charset=UTF-8"
       );
-      xhr.send(`method=START&code=${encodeURIComponent(window.code)}`);
+      xhr.send(
+        `method=START&code=${encodeURIComponent(
+          window.code
+        )}&token=${encodeURIComponent(await auth.currentUser.getIdToken())}`
+      );
     } else if (type == "single") {
       xhr.open("POST", URI_KEYS.API.HOST.SINGLE, true);
       xhr.setRequestHeader(
@@ -33,14 +37,16 @@ if (window.code != null) {
         xhr.send(
           `method=START&code=${encodeURIComponent(
             window.code
-          )}&question=${encodeURIComponent(startQuestion.trim())}`
+          )}&question=${encodeURIComponent(
+            startQuestion.trim()
+          )}&token=${encodeURIComponent(await auth.currentUser.getIdToken())}`
         );
       } else {
         window.location.reload();
       }
     }
   };
-  window.finish = function (type) {
+  window.finish = async function (type) {
     actions.innerHTML = `<img src="${URI_KEYS.LOADING}" class="center-loading"/>`;
     let xhr = new XMLHttpRequest();
 
@@ -58,14 +64,22 @@ if (window.code != null) {
         "content-type",
         "application/x-www-form-urlencoded;charset=UTF-8"
       );
-      xhr.send(`method=FINISH&code=${encodeURIComponent(window.code)}`);
+      xhr.send(
+        `method=FINISH&code=${encodeURIComponent(
+          window.code
+        )}&token=${encodeURIComponent(await auth.currentUser.getIdToken())}`
+      );
     } else if (type == "single") {
       xhr.open("POST", URI_KEYS.API.HOST.SINGLE, true);
       xhr.setRequestHeader(
         "content-type",
         "application/x-www-form-urlencoded;charset=UTF-8"
       );
-      xhr.send(`method=FINISH&code=${encodeURIComponent(window.code)}`);
+      xhr.send(
+        `method=FINISH&code=${encodeURIComponent(
+          window.code
+        )}&token=${encodeURIComponent(await auth.currentUser.getIdToken())}`
+      );
     }
   };
 
@@ -166,7 +180,10 @@ if (window.code != null) {
         trh.innerHTML = `<th>Name</th>\n`;
 
         for (let i = 1; i <= questionsLength; i++)
-          trh.innerHTML += `<th>${i}:${correctAnswers[i-1].replace("option","")}</th>\n`;
+          trh.innerHTML += `<th>${i}:${correctAnswers[i - 1].replace(
+            "option",
+            ""
+          )}</th>\n`;
 
         trh.innerHTML += "<th>Correct</th>\n";
         thead.appendChild(trh);

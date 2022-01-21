@@ -1,3 +1,4 @@
+const allowedOptions = ["A", "B", "C", "D", "E", "F"];
 async function createQuiz(btn) {
   if (
     window.editMode != true && // TODO test
@@ -60,11 +61,11 @@ async function createQuiz(btn) {
         }
       });
   };
+
   xhr.send(
-    "data=" +
-      encodeURIComponent(JSON.stringify(data)) +
-      "&code=" +
-      encodeURIComponent(window.code || "null") // if it is edit mode
+    `data=${encodeURIComponent(JSON.stringify(data))}&code=${
+      window.code || "null" // if it is edit mode
+    }&token=${encodeURIComponent(await auth.currentUser.getIdToken())}`
   );
 }
 function createDataForQuiz(validate) {

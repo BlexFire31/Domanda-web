@@ -2,6 +2,7 @@ from threading import Thread
 from re import findall as regex_findall
 from google.cloud.firestore import CollectionReference
 from google.cloud.firestore_v1.document import DocumentReference
+from utils.db import auth
 
 
 def runAsyncTask(target, *args):
@@ -49,3 +50,10 @@ def deleteResponses(collection: CollectionReference, parent: bool = True):
         runAsyncTask(document.delete)
     if(parent):
         runAsyncTask(answers.delete)
+
+
+def verify_id_token(token: str) -> dict:
+    try:
+        return auth.verify_id_token(token)
+    except:
+        return None

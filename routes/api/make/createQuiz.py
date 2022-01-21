@@ -1,8 +1,8 @@
 from routes.api.make.validateQuizData import validateQuizData
 from routes.api.make.makeQuiz import setQuizInFirebase
 from utils.db import database
-from flask import Blueprint, session, request
-from utils.functions import runAsyncTask
+from flask import Blueprint, request
+from utils.functions import runAsyncTask, verify_id_token
 
 
 api = Blueprint("createQuiz", __name__)
@@ -10,7 +10,8 @@ api = Blueprint("createQuiz", __name__)
 
 @api.route("/create", methods=["POST"])
 def create():
-    if session.get("Uid") == None:  # checks whether user is signed in
+    user = verify_id_token(request.form.get("token"))
+    if user == None:  # checks whether user is signed in
 
         return {
             "inProgress": False,
@@ -25,7 +26,7 @@ def create():
         # we update the count incase a new question is created by another client | The client knows when their question has been created when questionLength gets a value
         database.collection("DATA").document(
             "quiz-code").update({"number": code})
-        runAsyncTask(setQuizInFirebase, data, session.get("Uid"), code)
+        runAsyncTask(setQuizInFirebase, data, user["uid"], code)
 
         return {
             "inProgress": True,
@@ -34,5 +35,5 @@ def create():
     else:
         return {
             "inProgress": False,
-            "error": "The Data passed is invalid"
+            "error": "The data passed is invalid"
         }

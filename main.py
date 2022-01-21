@@ -5,6 +5,7 @@ import datetime
 from secrets import token_hex
 from flask_compress import Compress
 import os
+from dotenv import load_dotenv
 
 
 # TODO FIX THE WAY CLIENTS GET ACCESS TO QUESTIONS
@@ -16,6 +17,7 @@ app = Flask(
 app.register_blueprint(
     routes
 )
+load_dotenv() # Load .env file from local system (for development)
 app.secret_key = token_hex()
 app.config["WEB_CONFIG"] = os.environ["WEB_CONFIG"]
 Compress(app)
@@ -37,4 +39,4 @@ def on_request(response):
 
     return response
 
-#app.run()
+# app.run()

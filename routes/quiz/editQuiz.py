@@ -1,7 +1,7 @@
 
-from flask import session, redirect, url_for, Blueprint, render_template, abort, request, flash
+from flask import redirect, url_for, Blueprint, render_template, abort, request, flash
 from google.cloud.firestore_v1.base_document import DocumentSnapshot
-from utils.functions import isInt, runAsyncTask
+from utils.functions import isInt, runAsyncTask, verify_id_token
 from utils.db import database
 from google.cloud.firestore import CollectionReference
 from utils.routes import URI_KEYS
@@ -15,7 +15,8 @@ def EditQuizPage(code=""):
     # doing this so that when they go to edit/quiz or edit/randompage they should see 404
     if(code != "" and not isInt(code)):
         abort(404)
-    if(not session.get("Uid")):  # is not logged in
+    user = verify_id_token(request.cookies.get("login-token"))
+    if(request.cookies.get("login-token") == None or user == None):  # is not logged in
         return redirect(url_for(URI_KEYS.get("AUTH").get("LOGIN"), redirect=url_for(URI_KEYS.get("QUIZ").get("EDIT"))))
 
     if code.strip() == "":
@@ -30,7 +31,7 @@ def EditQuizPage(code=""):
     quizData = {}
     if (isInt(code)):
         quizRef = database.collection(code).document("Host").get()
-        if not (quizRef.exists and quizRef.to_dict().get("Host") == session.get("Uid")):
+        if not (quizRef.exists and quizRef.to_dict().get("Host") == user["uid"]):
             code = None  # set it to none, host.html will show error message and form again
             flash(
                 "The code provided is invalid (If you have entered the right code, try changing accounts)")

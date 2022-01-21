@@ -1,5 +1,5 @@
 
-from flask import session, request, flash, redirect, url_for, Blueprint, render_template
+from flask import session, request, flash, redirect, url_for, Blueprint, render_template, make_response
 from utils.db import auth
 from utils.routes import URI_KEYS
 
@@ -8,30 +8,32 @@ app = Blueprint("logIn", __name__)
 
 @app.route("/login", methods=["POST", "GET"])
 def LoginPage():
-    if(session.get("Uid") != None):
+    errorLoggingIn = False
+    if(request.cookies.get("login-token") != None):
         flash("You're already signed in")
         return redirect(url_for(URI_KEYS.get("HOME")))
 
     if request.method == "POST":
         try:
             # Checking whether user is valid
-            auth.get_user(request.form.get("account-uid"))
+            user = auth.verify_id_token(request.form.get("account-token"))
         except:
-            flash("This account doesn't exist")
+            flash("This account doesn't exist"),
+            errorLoggingIn = True
         else:
-            session["Email"] = request.form.get("account-email")
-            session["Name"] = request.form.get("account-name").strip()
-            session["Photourl"] = request.form.get("account-photo")
-            session["Uid"] = request.form.get("account-uid")
+            session["Name"] = user["name"]
 
-            return redirect(
+            res = make_response(redirect(
                 request.form.get("redirect")
                 if request.form.get("redirect") != None
                 else url_for(URI_KEYS.get("HOME"))
-            )
+            ))
+            res.set_cookie("login-token", request.form.get("account-token"))
+            return res
     return render_template(
         "login.html",
         redirect=request.args.get("redirect")
         if request.args.get("redirect") != None
-        else url_for(URI_KEYS.get("HOME"))
+        else url_for(URI_KEYS.get("HOME")),
+        signOut=errorLoggingIn
     )

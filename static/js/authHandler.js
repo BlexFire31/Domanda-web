@@ -13,16 +13,10 @@ function logOut() {
       window.location = URI_KEYS.AUTH.LOGOUT;
     });
 }
-function onSignIn(user) {
+async function onSignIn(user) {
   if (user == null || user == undefined) return;
 
-  document.querySelector("form.loginForm>[name='account-email']").value =
-    user.email;
-  document.querySelector("form.loginForm>[name='account-name']").value =
-    user.displayName;
-  document.querySelector("form.loginForm>[name='account-photo']").value =
-    user.photoURL;
-  document.querySelector("form.loginForm>[name='account-uid']").value =
-    user.uid;
+  document.querySelector("form.loginForm>[name='account-token']").value =
+    await user.getIdToken();
   return document.querySelector("form.loginForm").submit();
 }

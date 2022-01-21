@@ -1,33 +1,32 @@
-{%extends "template.html"%} {%block title%}Domanda Google Login {%endblock%}
+{%extends "template.html"%} {%block title%}Login to Domanda {%endblock%}
 {%block content%}
 
 <center id="auth-widget">
 
+  <h3 class="error">{{get_flashed_messages()[0]}}</h3>
 </center>
 
-
 <form action="{{url_for('Main.RouteAuth.logIn.LoginPage')}}" method="POST" class="loginForm" style="display: none">
-  <input type="text" value="" name="account-email" />
-  <input type="text" value="" name="account-name" />
-  <input type="text" value="" name="account-photo" />
-  <input type="text" value="" name="account-uid" />
+  <input type="text" value="" name="account-token" />
   <input type="text" value="{{redirect}}" name="redirect" />
 </form>
 <script>
 
-  var authWidget = new firebaseui.auth.AuthUI(auth);
-  authWidget.start("#auth-widget", {
+  window.addEventListener("load", () => {
+    var authWidget = new firebaseui.auth.AuthUI(auth);
+    authWidget.start("#auth-widget", {
 
-    signInOptions: [
+      signInOptions: [
 
-      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-      "microsoft.com",
-    ],
-    callbacks: {
-      signInSuccess: function (currentUser, credential, redirectUrl) {
-        onSignIn(currentUser)
+        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+        "microsoft.com",
+      ],
+      callbacks: {
+        signInSuccess: function (currentUser, credential, redirectUrl) {
+          onSignIn(currentUser)
+        }
       }
-    }
+    })
   })
 </script>
 {%endblock%}

@@ -1,3 +1,9 @@
+function sanitize(text = "") {
+  if (text == "" || text == null) return null;
+  let sanitizer = document.createElement("div");
+  sanitizer.textContent = text;
+  return sanitizer.innerHTML;
+}
 function loadQuiz() {
   let id = window.join;
   document.querySelector(
