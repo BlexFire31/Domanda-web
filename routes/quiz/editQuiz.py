@@ -72,4 +72,8 @@ def EditQuizPage(code=""):
                 ):
                     break
 
+            questionsKeys = [(int(questionID))
+                             for questionID in quizData.keys()]
+            quizData = [(quizData[str(questionID)]) for questionID in sorted(
+                questionsKeys)]  # sort the questions
     return render_template("edit.html", code=code, quizData=quizData,)

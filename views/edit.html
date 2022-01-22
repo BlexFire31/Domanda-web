@@ -13,7 +13,7 @@
 </form>
 {%else%}
 <ol id="questions">
-    {%for question in quizData.values()%}
+    {%for question in quizData%}
     <fieldset id="question">
         <legend>Question</legend>
         <center><input type="text" id="q-title" placeholder="Question Title" required="" size="50" maxlength="250"
