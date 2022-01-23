@@ -61,7 +61,9 @@ function loadQuiz() {
                   xhr.send(
                     `code=${encodeURIComponent(
                       window.join
-                    )}&question=${encodeURIComponent(activeQuestion)}`
+                    )}&question=${encodeURIComponent(
+                      activeQuestion
+                    )}&name=${encodeURIComponent(window.memberName)}`
                   );
                   xhr.onload = function () {
                     const returnData = JSON.parse(xhr.response);
@@ -156,7 +158,9 @@ function loadQuiz() {
           xhr.send(
             `code=${encodeURIComponent(
               window.join
-            )}&question=${encodeURIComponent(key)}`
+            )}&question=${encodeURIComponent(key)}&name=${encodeURIComponent(
+              window.memberName
+            )}`
           );
           xhr.onload = function () {
             const returnData = JSON.parse(xhr.response);
@@ -214,7 +218,11 @@ function loadQuiz() {
                 "content-type",
                 "application/x-www-form-urlencoded;charset=UTF-8"
               );
-              xhr.send(`code=${encodeURIComponent(window.join)}`);
+              xhr.send(
+                `code=${encodeURIComponent(
+                  window.join
+                )}&name=${encodeURIComponent(window.memberName)}`
+              );
               xhr.onload = function () {
                 const returnData = JSON.parse(xhr.response);
                 if (!returnData.success) return alert(returnData.error);
@@ -304,7 +312,9 @@ function displayQuestion(parent, data, ans, append = false) {
       xhr.send(
         `code=${encodeURIComponent(window.join)}&question=${encodeURIComponent(
           data.id
-        )}&option=option${encodeURIComponent(selected.value)}`
+        )}&option=option${encodeURIComponent(selected.value)}&name=${
+          window.memberName
+        }`
       );
       xhr.onload = function () {
         const returnData = JSON.parse(xhr.response);

@@ -30,7 +30,7 @@ def JoinQuizPage():
 
     if (
         isInt(request.form.get("code"))
-        and session.get("Name")
+        and request.form.get("Name")
     ):# parameters passed are ok
 
         ####################-------------MULTI THREADING VERIFICATIONS-------------####################
@@ -66,7 +66,7 @@ def JoinQuizPage():
                     .collection(request.form.get("code").strip())
                     .document("Members")
                     .collection("Members")
-                    .document(session.get("Name"))
+                    .document(request.form.get("Name"))
                     .get().exists 
             )
             verifications.update({
@@ -96,14 +96,14 @@ def JoinQuizPage():
                 .collection(request.form.get("code").strip())
                 .document("Lobby")
                 .collection("Lobby")
-                .document(session.get("Name"))
+                .document(request.form.get("Name"))
                 .set,
             {}
         )
 
         return render_template(
             "join.html",
-            name=session.get("Name"),
+            name=request.form.get("Name"),
             code=request.form.get("code").strip()
         )
 
