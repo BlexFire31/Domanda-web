@@ -12,6 +12,6 @@ async function onSignIn(user) {
 
   document.querySelector("form.loginForm>[name='account-token']").value =
     await user.getIdToken();
-  localStorage.setItem("name", user.name);
+  localStorage.setItem("name", user.displayName);
   return document.querySelector("form.loginForm").submit();
 }
