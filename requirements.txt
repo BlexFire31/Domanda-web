@@ -3,3 +3,4 @@ firebase_admin
 flask
 flask-compress
 python-dotenv
+pyjwt
