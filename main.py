@@ -1,7 +1,6 @@
-from flask import Flask, request
+from flask import Flask, request, redirect
 from routes import app as routes
-import logging
-import datetime
+from datetime import datetime, timedelta
 from secrets import token_hex
 from flask_compress import Compress
 import os
@@ -17,26 +16,25 @@ app = Flask(
 app.register_blueprint(
     routes
 )
-load_dotenv() # Load .env file from local system (for development)
+load_dotenv()  # Load .env file from local system (for development)
 app.secret_key = token_hex()
 app.config["WEB_CONFIG"] = os.environ["WEB_CONFIG"]
 Compress(app)
 
-logging.basicConfig(level=logging.INFO)
-logging.info(f"Domanda server started at {datetime.datetime.now()}")
+
+@app.before_request
+def before_request():
+    # Only runs when on heroku and url starts with http
+    if 'DYNO' in os.environ and request.url.startswith('http://'):
+        url = request.url.replace('http://', 'https://', 1)
+        return redirect(url, code=301)
 
 
 @app.after_request
 def on_request(response):
     if(request.path.startswith("/static")):
-        expiry_time = datetime.datetime.utcnow() + datetime.timedelta(7)
+        expiry_time = datetime.utcnow() + timedelta(7)
         response.headers["Expires"] = expiry_time.strftime(
             "%a, %d %b %Y %H:%M:%S GMT")
-        logging.info(f"Resource {request.path}")
-    else:
-        logging.info(
-            f"[{datetime.datetime.now()}] {request.method} {request.path} [{response.status}]")
 
     return response
-
-# app.run()
