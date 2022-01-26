@@ -1,5 +1,5 @@
 
-from flask import session, request, flash, redirect, url_for, Blueprint, render_template, make_response
+from flask import request, flash, redirect, url_for, Blueprint, render_template, make_response
 from utils.db import auth
 from utils.functions import verify_id_token
 from utils.routes import URI_KEYS
@@ -21,7 +21,6 @@ def LoginPage():
         except:
             flash("This account doesn't exist"),
         else:
-            session["Name"] = user["name"]
 
             res = make_response(redirect(
                 request.form.get("redirect")

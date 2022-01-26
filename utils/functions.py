@@ -10,7 +10,7 @@ def runAsyncTask(target, *args):
 
 
 def validateName(name: str) -> tuple[bool, str]:
-    if not(name != None and name.strip() != ""):
+    if (name == None or name.strip() == ""):
         return False, "Name cannot be empty"
 
     if(len(regex_findall(r"__((\s)?(\S)?)*__", name.strip())) != 0):

@@ -1,16 +1,17 @@
 from utils.db import database
-from flask import Blueprint, session, request, copy_current_request_context
+from flask import Blueprint, request, copy_current_request_context
 from utils.functions import runAsyncTask, isInt
+from utils.web_tokens import validateJWT
 
 api = Blueprint("getAnswer", __name__)
 
 
 @api.route("/get", methods=["POST", ])
 def getCorrectAnswer():
-
+    isValidJWT, userData = validateJWT(request.form.get("token"))
     if (
         isInt(request.form.get("code")) and
-        request.form.get("name") and
+        isValidJWT and
         isInt(request.form.get("question"))
     ):  # Checking whether required params are correct
 
@@ -33,7 +34,7 @@ def getCorrectAnswer():
                 .collection(request.form.get("question").strip())
                 .document("Answers")
                 .collection("Answers")
-                .document(request.form.get("name"))
+                .document(userData.get("name"))
                 .get().exists
             )
             verifications.update({

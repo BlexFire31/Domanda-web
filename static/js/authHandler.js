@@ -1,15 +1,9 @@
-function signIn() {
-  let provider = new firebase.auth.GoogleAuthProvider();
-  firebase
-    .auth()
-    .signInWithPopup(provider)
-    .then((value) => onSignIn(value));
-}
 function logOut() {
   firebase
     .auth()
     .signOut()
     .then(function () {
+      localStorage.removeItem("name");
       window.location = URI_KEYS.AUTH.LOGOUT;
     });
 }
@@ -18,5 +12,6 @@ async function onSignIn(user) {
 
   document.querySelector("form.loginForm>[name='account-token']").value =
     await user.getIdToken();
+  localStorage.setItem("name", user.name);
   return document.querySelector("form.loginForm").submit();
 }

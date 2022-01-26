@@ -1,6 +1,8 @@
 from utils.functions import isInt, runAsyncTask
 from utils.db import database
-from flask import request, Blueprint, session, copy_current_request_context
+from flask import request, Blueprint, copy_current_request_context
+
+from utils.web_tokens import validateJWT
 
 
 api = Blueprint("addMember", __name__)
@@ -8,8 +10,8 @@ api = Blueprint("addMember", __name__)
 
 @api.route("/", methods=["POST"])
 def addMember():
-
-    if isInt(request.form.get("code")) and request.form.get("name"):
+    isValidJWT, userData = validateJWT(request.form.get("token"))
+    if isInt(request.form.get("code")) and isValidJWT:
 
         quizRef = database.collection(request.form.get("code").strip())
 
@@ -27,7 +29,7 @@ def addMember():
                 quizRef
                 .document("Members")
                 .collection("Members")
-                .document(request.form.get("name"))
+                .document(userData.get("name"))
                 .get().exists
             )
             verifications.update({
@@ -86,9 +88,16 @@ def addMember():
             quizRef
             .document("Members")
             .collection("Members")
-            .document(request.form.get("name"))
+            .document(userData.get("name"))
             .set,
-            {"points": 0, "finished": False}
+            {}
+        )
+        runAsyncTask(
+            quizRef
+            .document("Lobby")
+            .collection("Lobby")
+            .document(userData.get("name"))
+            .delete,
         )
         return {"success": True, }
 

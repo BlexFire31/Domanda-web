@@ -1,7 +1,8 @@
 from utils.db import database
-from flask import Blueprint, session, request, copy_current_request_context
+from flask import Blueprint, request, copy_current_request_context
 from utils.functions import runAsyncTask, isInt
 from utils.question import allOptionsList
+from utils.web_tokens import validateJWT
 
 api = Blueprint("setAnswer", __name__)
 
@@ -9,9 +10,10 @@ api = Blueprint("setAnswer", __name__)
 @api.route("/set", methods=["POST"])
 def setAnswer():
 
+    isValidJWT, userData = validateJWT(request.form.get("token"))
     if(
         isInt(request.form.get("code")) and
-        request.form.get("name") and
+        isValidJWT and
         request.form.get("option") in allOptionsList and
         isInt(request.form.get("question"))
     ):  # Checking whether required params are passed and correct
@@ -35,7 +37,7 @@ def setAnswer():
                 .collection(request.form.get("question").strip())
                 .document("Answers")
                 .collection("Answers")
-                .document(request.form.get("name"))
+                .document(userData.get("name"))
                 .get().exists
             )
             verifications.update({
@@ -86,7 +88,7 @@ def setAnswer():
                 quizRef
                 .document("Members")
                 .collection("Members")
-                .document(request.form.get("name"))
+                .document(userData.get("name"))
                 .get().exists
             )
             verifications.update({
@@ -119,7 +121,7 @@ def setAnswer():
             .collection(request.form.get("question").strip())
             .document("Answers")
             .collection("Answers")
-            .document(request.form.get("name"))
+            .document(userData.get("name"))
             .set,
             {"option": request.form.get("option")}
         )

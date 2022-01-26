@@ -8,14 +8,16 @@
 
   <h2>Domanda</h2>
 
-  <form action="{{url_for('Main.RouteQuiz.joinQuiz.JoinQuizPage')}}" method="POST">
-    <input type="text" class="input" name="code" value="{%if code!=None%}{{code}}{%endif%}" placeholder="Quiz Code" />
-    <input type="text" class="input" name="Name"
-      value="{%if session.get('Name')!=None%}{{session.get('Name')}}{%endif%}" placeholder="Nickname" />
+  <form action="{{url_for('Main.RouteQuiz.joinQuiz.JoinQuizPage')}}" method="POST" id="join-form">
+    <input type="text" class="input" name="code" value="{%if code!=None %}{{code}}{%endif%}" placeholder="Quiz Code" />
+    <input type="text" class="input" name="Name" placeholder="Nickname"
+      onchange="localStorage.setItem('name',this.value)" />
     <p class="error">{{get_flashed_messages()[0]}}</p>
     <button type="submit">Ok</button>
   </form>
-
+  <script>
+    document.querySelector("#join-form>input[name=Name]").value = localStorage.getItem("name") || "";
+  </script>
   <form action="{{url_for('Main.RouteQuiz.createQuiz.CreateQuizPage')}}" method="GET">
     <button type="submit">Create a quiz</button>
   </form>

@@ -4,6 +4,24 @@ function sanitize(text = "") {
   sanitizer.textContent = text;
   return sanitizer.innerHTML;
 }
+refreshTokenLoop();
+function refreshTokenLoop() {
+  setTimeout(() => {
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", URI_KEYS.API.JOIN.REFRESH_TOKEN, true);
+    xhr.setRequestHeader(
+      "content-type",
+      "application/x-www-form-urlencoded;charset=UTF-8"
+    );
+    xhr.onload = () => {
+      const returnData = JSON.parse(xhr.response);
+      if (!returnData.success) return alert(returnData.error);
+      window.token = returnData.token;
+      setTimeout(refreshTokenLoop, 0);
+    };
+    xhr.send(`token=${encodeURIComponent(window.token)}`);
+  }, 2700 * 1000 /* 45 minutes in milliseconds */);
+}
 function loadQuiz() {
   let id = window.join;
   document.querySelector(
@@ -63,7 +81,7 @@ function loadQuiz() {
                       window.join
                     )}&question=${encodeURIComponent(
                       activeQuestion
-                    )}&name=${encodeURIComponent(window.memberName)}`
+                    )}&token=${encodeURIComponent(window.token)}`
                   );
                   xhr.onload = function () {
                     const returnData = JSON.parse(xhr.response);
@@ -158,8 +176,8 @@ function loadQuiz() {
           xhr.send(
             `code=${encodeURIComponent(
               window.join
-            )}&question=${encodeURIComponent(key)}&name=${encodeURIComponent(
-              window.memberName
+            )}&question=${encodeURIComponent(key)}&token=${encodeURIComponent(
+              window.token
             )}`
           );
           xhr.onload = function () {
@@ -221,19 +239,12 @@ function loadQuiz() {
               xhr.send(
                 `code=${encodeURIComponent(
                   window.join
-                )}&name=${encodeURIComponent(window.memberName)}`
+                )}&token=${encodeURIComponent(window.token)}`
               );
               xhr.onload = function () {
                 const returnData = JSON.parse(xhr.response);
                 if (!returnData.success) return alert(returnData.error);
-                lobbyListener(); //unsubscribe
-
-                firestore
-                  .collection(window.join)
-                  .doc("Lobby")
-                  .collection("Lobby")
-                  .doc(window.memberName)
-                  .delete(); //Remove from lobby and go to Members
+                setTimeout(lobbyListener, 0); //unsubscribe
                 window.onbeforeunload = () => "";
                 loadQuiz();
               };
@@ -312,9 +323,9 @@ function displayQuestion(parent, data, ans, append = false) {
       xhr.send(
         `code=${encodeURIComponent(window.join)}&question=${encodeURIComponent(
           data.id
-        )}&option=option${encodeURIComponent(selected.value)}&name=${
-          window.memberName
-        }`
+        )}&option=option${encodeURIComponent(
+          selected.value
+        )}&token=${encodeURIComponent(window.token)}`
       );
       xhr.onload = function () {
         const returnData = JSON.parse(xhr.response);

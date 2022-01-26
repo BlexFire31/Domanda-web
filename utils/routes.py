@@ -16,7 +16,8 @@ URI_KEYS = {
         "JOIN": {
             "GET": 'Main.RouteApi.ApiJoin.getAnswer.getCorrectAnswer',
             "JOIN": 'Main.RouteApi.ApiJoin.addMember.addMember',
-            "SET": 'Main.RouteApi.ApiJoin.setAnswer.setAnswer'
+            "SET": 'Main.RouteApi.ApiJoin.setAnswer.setAnswer',
+            "REFRESH_TOKEN": 'Main.RouteApi.ApiJoin.refreshToken.refreshToken'
         },
         "MAKE": {
             "CREATE": 'Main.RouteApi.ApiMake.createQuiz.create',

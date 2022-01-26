@@ -135,7 +135,8 @@
                 JOIN: {
                     GET: "{{url_for('Main.RouteApi.ApiJoin.getAnswer.getCorrectAnswer')}}",
                     JOIN: "{{url_for('Main.RouteApi.ApiJoin.addMember.addMember')}}",
-                    SET: "{{url_for('Main.RouteApi.ApiJoin.setAnswer.setAnswer')}}"
+                    SET: "{{url_for('Main.RouteApi.ApiJoin.setAnswer.setAnswer')}}",
+                    REFRESH_TOKEN: "{{url_for('Main.RouteApi.ApiJoin.refreshToken.refreshToken')}}",
                 },
                 MAKE: {
                     CREATE: "{{url_for('Main.RouteApi.ApiMake.createQuiz.create')}}",
