@@ -16,10 +16,10 @@ def validateQuizData(data) -> tuple[bool, list[Question]]:
                 return False, []
 
             newData: list[Question] = []
-            for question in data:  # TODO use index of enumerate for question id
+            for index,question in enumerate(data):
                 newData.append(
                     Question(
-                        id=question.get("id"),
+                        id=index+1, # enumerate starts at 0
                         correctOption=question.get("correctOption"),
                         title=question.get("title"),
                         options={
