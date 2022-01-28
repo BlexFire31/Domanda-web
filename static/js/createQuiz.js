@@ -44,7 +44,7 @@ async function createQuiz(btn) {
               clearInterval(disabledInterval);
               onbeforeunload = () => null;
               window.location = `${URI_KEYS.QUIZ.HOST}/${res.code}`;
-            }, 7000);
+            }, 2500);
             alert(
               "Your quiz code is " +
                 res.code +
@@ -55,7 +55,7 @@ async function createQuiz(btn) {
               clearInterval(disabledInterval);
               onbeforeunload = () => null;
               window.location = `${URI_KEYS.QUIZ.HOST}/${res.code}`;
-            }, 4000);
+            }, 2500);
             alert("Your quiz has been updated");
           }
         }
