@@ -5,7 +5,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Flask Server",
+      "name": "Domanda Web",
       "type": "python",
       "request": "launch",
       "module": "flask",
@@ -17,7 +17,8 @@
         "FLASK_ENV": "deployment",
         "FLASK_DEBUG": "1"
       },
-      "args": ["run", "--no-debugger"],
+
+      "args": ["run", "--no-debugger", "--port", "5000"],
       "jinja": true
     }
   ]

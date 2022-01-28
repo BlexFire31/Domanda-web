@@ -12,21 +12,4 @@ URI_KEYS = {
         "JOIN": 'Main.RouteQuiz.joinQuiz.JoinQuizPage',
         "EDIT": 'Main.RouteQuiz.editQuiz.EditQuizPage'
     },
-    "API": {
-        "JOIN": {
-            "GET": 'Main.RouteApi.ApiJoin.getAnswer.getCorrectAnswer',
-            "JOIN": 'Main.RouteApi.ApiJoin.addMember.addMember',
-            "SET": 'Main.RouteApi.ApiJoin.setAnswer.setAnswer',
-            "REFRESH_TOKEN": 'Main.RouteApi.ApiJoin.refreshToken.refreshToken'
-        },
-        "MAKE": {
-            "CREATE": 'Main.RouteApi.ApiMake.createQuiz.create',
-            "EDIT": 'Main.RouteApi.ApiMake.editQuiz.edit',
-        },
-        "HOST": {
-            "ALL": 'Main.RouteApi.ApiHost.hostAll.hostAll',
-            "SINGLE": 'Main.RouteApi.ApiHost.hostSingle.hostSingle',
-            "GET_STATUS": 'Main.RouteApi.ApiHost.getStatus.getStatus',
-        }
-    },
 }
