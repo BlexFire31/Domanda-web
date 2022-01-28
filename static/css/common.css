@@ -2,13 +2,18 @@ h1,
 h2 {
   font-family: SItalic;
 }
+nav::after {
+  content: "";
+  display: table;
+  clear: both;
+}
 
 [disabled] {
   background-color: var(--disabled-color);
 }
 [type="submit"] {
   display: block;
-  margin-top: 0.6%;
+  margin-top: 0.25rem;
 }
 .error {
   color: red;
@@ -65,9 +70,8 @@ fieldset {
 }
 #toggle-theme-btn > img,
 #info-btn > img {
-  margin: 1%;
-  width: 5vh;
-  height: 5vh;
+  width: 2rem;
+  height: 2rem;
 }
 
 #toggle-theme-btn {
@@ -86,13 +90,13 @@ button {
   font-size: 100%;
 }
 #home-btn > img {
-  width: 5vh;
-  height: 5vh;
+  width: 2rem;
+  height: 2rem;
   float: left;
   margin: 1%;
 }
 input {
-  margin: 0.2%;
+  margin: 1vh;
   font-size: 1.2em;
   padding: 0.75em;
   border-radius: 2em;
@@ -102,8 +106,8 @@ input {
 }
 nav .account-circle {
   border-radius: 50%;
-  width: 5vh;
-  height: 5vh;
+  width: 2rem;
+  height: 2rem;
   float: right;
   margin: 1%;
   display: none;
