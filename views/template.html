@@ -133,19 +133,19 @@
             },
             API: {
                 JOIN: {
-                    GET: "{{url_for('Main.RouteApi.ApiJoin.getAnswer.getCorrectAnswer')}}",
-                    JOIN: "{{url_for('Main.RouteApi.ApiJoin.addMember.addMember')}}",
-                    SET: "{{url_for('Main.RouteApi.ApiJoin.setAnswer.setAnswer')}}",
-                    REFRESH_TOKEN: "{{url_for('Main.RouteApi.ApiJoin.refreshToken.refreshToken')}}",
+                    GET: "{{config.API_PREFIX}}/join/get",
+                    JOIN: "{{config.API_PREFIX}}/join/add",
+                    SET: "{{config.API_PREFIX}}/join/set",
+                    REFRESH_TOKEN: "{{config.API_PREFIX}}/join/refreshToken",
                 },
                 MAKE: {
-                    CREATE: "{{url_for('Main.RouteApi.ApiMake.createQuiz.create')}}",
-                    EDIT: "{{url_for('Main.RouteApi.ApiMake.editQuiz.edit')}}",
+                    CREATE: "{{config.API_PREFIX}}/make/create",
+                    EDIT: "{{config.API_PREFIX}}/make/edit",
                 },
                 HOST: {
-                    ALL: "{{url_for('Main.RouteApi.ApiHost.hostAll.hostAll')}}",
-                    SINGLE: "{{url_for('Main.RouteApi.ApiHost.hostSingle.hostSingle')}}",
-                    GET_STATUS: "{{url_for('Main.RouteApi.ApiHost.getStatus.getStatus')}}",
+                    ALL: "{{config.API_PREFIX}}/host/all",
+                    SINGLE: "{{config.API_PREFIX}}/host/single",
+                    GET_STATUS: "{{config.API_PREFIX}}/host/getStatus",
                 }
             },
             LOADING: "{{url_for('static',filename='assets/Loading.svg')}}"

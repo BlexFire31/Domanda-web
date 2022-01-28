@@ -6,8 +6,6 @@ from flask_compress import Compress
 import os
 from dotenv import load_dotenv
 
-
-# TODO FIX THE WAY CLIENTS GET ACCESS TO QUESTIONS
 app = Flask(
     __name__,
     template_folder="views"
@@ -19,6 +17,7 @@ app.register_blueprint(
 load_dotenv()  # Load .env file from local system (for development)
 app.secret_key = token_hex()
 app.config["WEB_CONFIG"] = os.environ["WEB_CONFIG"]
+app.config["API_PREFIX"] = os.environ["API_PREFIX"]
 Compress(app)
 
 
