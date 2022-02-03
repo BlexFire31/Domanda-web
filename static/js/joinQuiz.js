@@ -460,8 +460,10 @@ class joinQuiz {
     let orderedList =
       document.querySelector("center>ol") ||
       this.#createElement("ol", "questions");
+    orderedList.innerHTML = "";
     /**
      * create an ordered list with id=questions if it already does not exist
+     * remove its children
      * iterate through this.#questionsToBeDisplayed
      * append them to the ordered list according to the question's ID
      */
