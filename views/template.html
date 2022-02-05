@@ -5,7 +5,6 @@
 
     <script>
         const firebaseConfig = {{ config.WEB_CONFIG| safe}};
-
         // Theme related
 
         function updateTheme() {
@@ -143,9 +142,9 @@
                     EDIT: "{{config.API_PREFIX}}/make/edit",
                 },
                 HOST: {
-                    ALL: "{{config.API_PREFIX}}/host/all",
-                    SINGLE: "{{config.API_PREFIX}}/host/single",
-                    GET_STATUS: "{{config.API_PREFIX}}/host/getStatus",
+                    START_ALL: "{{config.API_PREFIX}}/host/start-all",
+                    START_SINGLE: "{{config.API_PREFIX}}/host/start-single",
+                    FINISH: "{{config.API_PREFIX}}/host/finish",
                 }
             },
             LOADING: "{{url_for('static',filename='assets/Loading.svg')}}"
@@ -169,6 +168,9 @@
                     document.querySelector("nav #toggle-theme-btn").style.float = "left";
                     document.querySelector("nav #home-btn").style.display = "none";
                     document.querySelector("nav #info-btn").style.display = "block";
+                }
+                if (window.execClass != null) {
+                    new window.execClass(...window.execArguments);
                 }
             })
         })();
