@@ -6,7 +6,7 @@ REQUIRES
 * code
 -->
 <center>
-  <h4>Your name is</h4>
+  <h4>Your name is {{name}}</h4>
   <img src="{{url_for('static',filename='assets/Loading.svg')}}" style="width:2rem;height:2rem" />
 </center>
 
@@ -14,8 +14,6 @@ REQUIRES
   window.join = "{{code}}";
   window.memberName = "{{name}}";
   window.token = "{{token}}";
-  document.querySelector("center>h4").innerHTML =
-    "Your name is \"" + window.memberName + "\"";
 </script>
 {%block header%}
 <style>
@@ -47,5 +45,9 @@ REQUIRES
     background-color: var(--error);
   }
 </style>
-<script src="{{url_for('static', filename='js/joinQuiz.js')}}" defer></script>
+<script src="{{url_for('static', filename='js/joinQuiz.js')}}"></script>
+<script>
+  window.execClass = joinQuiz;
+  window.execArguments = ["{{token}}", "{{code}}", "{{name}}"];
+</script>
 {%endblock%} {%endblock%}

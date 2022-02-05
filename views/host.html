@@ -12,23 +12,81 @@
   </center>
 </form>
 {%else%}
-<script>
-  window.code = "{{code}}";
-  window.start = function (type) { }
-  window.finish = function (type) { }
-</script>
-<!-- TODO add widgets for hosting quiz -->
 <center id="host-actions">
   <img src="{{url_for('static',filename='assets/Loading.svg')}}" class="center-loading" />
 </center>
+<center id="host-panel">
+  <img src="{{url_for('static',filename='assets/Loading.svg')}}" class="center-loading" />
+</center>
 {%block header%}
-<script src="{{url_for('static', filename='js/hostQuiz.js')}}" defer></script>
+<script src="{{url_for('static', filename='js/hostQuiz.js')}}"></script>
+<script>
+  window.execClass = hostQuiz;
+  window.execArguments = ["{{code}}"];
+</script>
 <style>
-  center.members {
+  #select-question-prompt {
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    background-color: var(--disabled-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+
+  #select-question-prompt>.form-wrapper {
+    border-radius: 1rem;
+    width: fit-content;
+    height: fit-content;
+    background-color: var(--input-color);
+    opacity: 1;
+    display: grid;
+    grid-template-areas:
+      "heading heading heading"
+      "input input input"
+      "ok cancel cancel";
+    padding: 3rem;
+  }
+
+  #select-question-prompt>.form-wrapper>input {
+    border-radius: .8rem;
+    font-size: 1rem;
+    display: block;
+    grid-area: input;
+    width: 60%;
+    margin: 1rem;
+  }
+
+
+  #select-question-prompt>.form-wrapper>button {
+    padding: 2rem;
+    margin: 1rem;
+  }
+
+  #select-question-prompt>.form-wrapper>h3 {
+    font-size: large;
+    grid-area: heading;
+    margin: 1rem;
+  }
+
+  #select-question-prompt>.form-wrapper>button.ok {
+    background-color: var(--success);
+    grid-area: ok;
+  }
+
+  #select-question-prompt>.form-wrapper>button.cancel {
+    grid-area: cancel;
+  }
+
+  #host-panel>.attendees {
     margin: 5vh;
   }
 
-  center.members>span {
+  #host-panel>.attendees>span {
     display: inline-block;
     border-radius: 0.5rem;
     padding: 4vh;
@@ -37,7 +95,7 @@
     background-color: rgba(19, 19, 19, 0.24);
   }
 
-  center.answers>table {
+  #host-panel>.responses>table {
     background-color: rgba(170, 170, 170, 0.2);
     border-radius: 0.5em;
     margin: 3em;
@@ -45,25 +103,28 @@
     width: 70vw;
   }
 
-  center.answers>table * {
+  #host-panel>.responses>table * {
     text-align: center;
   }
 
-  .answers>table>thead th,
-  .answers>table center {
+  #host-panel>.responses>table th {
     font-size: 1.5rem;
     font-family: SRegular;
   }
 
-  center button {
+  #host-actions button {
     margin: 1rem;
     padding: 1rem;
     font-size: large;
   }
-  
-  center.answers{
-    width:100%;
-    overflow-y:auto;
+
+  #host-panel>.responses {
+    width: 100%;
+    overflow-y: auto;
+  }
+
+  #host-panel {
+    margin: 2rem;
   }
 </style>
 {%endblock%} {%endif%} {%endblock%}
