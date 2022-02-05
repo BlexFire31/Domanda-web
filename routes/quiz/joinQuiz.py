@@ -87,13 +87,16 @@ def JoinQuizPage():
         runAsyncTask(nameTaken)  # name has already been taken
 
         while None in verifications.values():  # wait till threads are done and if threads are done check whether any tests failed, if failed, immediately notify user
-
-            for case in verifications.values():
-                if case == None:
-                    continue  # case is incomplete
-                if not case[0]:  # case has failed
-                    flash(case[1])
-                    return redirect(url_for(URI_KEYS.get("HOME")))
+            try:
+                values = list(verifications.values())
+                for case in values:
+                    if case == None:
+                        continue  # case is incomplete
+                    if not case[0]:  # case has failed
+                        flash(case[1])
+                        return redirect(url_for(URI_KEYS.get("HOME")))
+            except:  # Dictionary value changed during iteration
+                continue
 
         for case in verifications.values():  # once all threads are done, do final check
 
