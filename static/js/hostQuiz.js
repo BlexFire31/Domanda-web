@@ -147,7 +147,7 @@ class hostQuiz {
     this.#hostPanel.style.display = "none";
     const okButtonDisabledInterval = setInterval(() => {
       let integerValue = parseInt(questionInput.value);
-      okButton.disabled = integerValue > questionsLength || integerValue < 1;
+      okButton.disabled = integerValue > questionsLength || integerValue < 1 || isNaN(integerValue);
     }, 50);
     return new Promise((resolve, reject) => {
       okButton.onclick = () => {
