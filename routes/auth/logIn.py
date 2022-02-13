@@ -7,7 +7,7 @@ from utils.routes import URI_KEYS
 app = Blueprint("logIn", __name__)
 
 
-@app.route("/login", methods=["POST", "GET"])
+@app.route("/logIn", methods=["POST", "GET"])
 def LoginPage():
     user = verify_id_token(request.cookies.get("login-token"))
     if(user != None):
@@ -17,7 +17,7 @@ def LoginPage():
     if request.method == "POST":
         try:
             # Checking whether user is valid
-            user = auth.verify_id_token(request.form.get("account-token"))
+            user = auth.verify_id_token(request.form.get("token"))
         except:
             flash("This account doesn't exist"),
         else:
@@ -27,7 +27,7 @@ def LoginPage():
                 if request.form.get("redirect") != None
                 else url_for(URI_KEYS.get("HOME"))
             ))
-            res.set_cookie("login-token", request.form.get("account-token"))
+            res.set_cookie("login-token", request.form.get("token"))
             return res
     return render_template(
         "login.html",

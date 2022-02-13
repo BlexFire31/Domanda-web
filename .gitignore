@@ -2,3 +2,7 @@
 __pycache__
 ssl
 .vscode/settings.json
+node_modules
+package-lock.json
+static/out
+typescript/utils/config.ts

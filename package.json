@@ -1,0 +1,36 @@
+{
+  "name": "domanda-web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BlexFire31/Domanda-web.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BlexFire31/Domanda-web/issues"
+  },
+  "homepage": "https://github.com/BlexFire31/Domanda-web#readme",
+  "devDependencies": {
+    "@types/firebase": "^3.2.1",
+    "browserify": "^17.0.0",
+    "dotenv": "^16.0.0",
+    "eslint-loader": "^4.0.2",
+    "firebase": "^9.6.6",
+    "firebaseui": "^6.0.0",
+    "gulp": "^4.0.2",
+    "gulp-sass": "^5.1.0",
+    "gulp-sourcemaps": "^3.0.0",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "sass": "^1.49.7",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.5.5",
+    "webpack": "^5.68.0"
+  }
+}

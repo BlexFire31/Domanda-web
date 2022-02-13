@@ -1,0 +1,7 @@
+#popupBackground {
+  width: 100%;
+  height: 100%;
+  &.hide {
+    visibility: hidden;
+  }
+}
