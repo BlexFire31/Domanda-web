@@ -1,0 +1,51 @@
+{%from "./macros/default_stylesheet.jinja" import default_stylesheet%}
+{%from "./macros/default_script" import default_script%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary Meta Tags -->
+    <title>Domanda - {%block title%}{%endblock%}</title>
+    <meta name="title" content="Domanda - {%block title%}{%endblock%}">
+    <meta name="description"
+        content="{%block description%}Domanda is secure quiz platform designed with a simple UI and speed{%endblock%}">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://domanda-quiz.herokuapp.com/">
+    <meta property="og:title" content="Domanda - {%block title%}{%endblock%}">
+    <meta property="og:description"
+        content="{%block description%}Domanda is secure quiz platform designed with a simple UI and speed{%endblock%}">
+    <meta property="og:image"
+        content="{%block title-card%}{{url_for('static', filename='images/title-cards/home.svg')}}?cb={{cache_bust}}{%endblock%}">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://domanda-quiz.herokuapp.com/">
+    <meta property="twitter:title" content="Domanda - {%block title%}{%endblock%}">
+    <meta property="twitter:description"
+        content="{%block description%}Domanda is secure quiz platform designed with a simple UI and speed{%endblock%}">
+    <meta property="twitter:image"
+        content="{%block title-card%}{{url_for('static', filename='images/title-cards/home.svg')}}?cb={{cache_bust}}{%endblock%}">
+
+    <!-- Router module -->
+    <meta name="router:module" content="{%block router-module%}{%endblock%}">
+
+    <!-- Scripts and Style sheets -->
+    {{default_stylesheet()}}
+    {{default_script()}}
+
+    {%block head%}{%endblock%}
+</head>
+
+<body>
+    <div id="root">
+        {%block content%}{%endblock%}
+    </div>
+</body>
+
+</html>

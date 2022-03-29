@@ -1,0 +1,1 @@
+{"version":3,"sources":["style.scss"],"names":[],"mappings":"AACA;EACE,YAFM","file":"style.css","sourcesContent":["$color: red;\r\nbody {\r\n  background: $color;\r\n}\r\n"]}

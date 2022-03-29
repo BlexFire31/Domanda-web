@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch": "node compile.js"
   },
   "repository": {
     "type": "git",
@@ -19,18 +19,22 @@
   "homepage": "https://github.com/BlexFire31/Domanda-web#readme",
   "devDependencies": {
     "@types/firebase": "^3.2.1",
+    "@typescript-eslint/eslint-plugin": "^5.16.0",
+    "@typescript-eslint/parser": "^5.16.0",
     "browserify": "^17.0.0",
     "dotenv": "^16.0.0",
     "eslint-loader": "^4.0.2",
     "firebase": "^9.6.6",
     "firebaseui": "^6.0.0",
     "gulp": "^4.0.2",
+    "gulp-rename": "^2.0.0",
     "gulp-sass": "^5.1.0",
     "gulp-sourcemaps": "^3.0.0",
     "gulp-typescript": "^6.0.0-alpha.1",
     "sass": "^1.49.7",
+    "sortablejs": "^1.14.0",
     "ts-loader": "^9.2.6",
-    "typescript": "^4.5.5",
+    "typescript": "^4.6.3",
     "webpack": "^5.68.0"
   }
 }
